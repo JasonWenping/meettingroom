@@ -3,6 +3,7 @@
     <header>
       <img src="@/assets/logo_white.png" id="logo" width="50px">
       <h1>会议室预订系统</h1>
+      <span class="logout" @click="logout">Logout</span>
     </header>
     <router-view></router-view>
   </div>
@@ -11,7 +12,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  methods:{
+    logout(){
+      alert('退出系统！');
+      location.href='/login.html';
+    }
+  }
 }
 </script>
 
@@ -42,5 +49,18 @@ header{
 }
 h1{
   margin-top: 20px;
+}
+.logout{
+  float: right;
+  margin-right: 50px;
+  display: block;
+  height: 90px;
+  line-height: 90px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.logout:hover{
+  color: coral;
 }
 </style>

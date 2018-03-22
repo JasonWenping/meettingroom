@@ -2,7 +2,7 @@
 <div id="app">
   <div class="tag">
     <span>日期：</span>
-    <input type="date" :value="getDatetime()">
+    <input type="date" v-model.lazy="newday">
   </div>
 
   <div class="tableList">
@@ -35,9 +35,14 @@ export default {
   data() {
     return {
       times:[],
+      newday:'',
       isHide:false,
       orderList:[],
       orderTime:[],
+      begin:[],
+      end:[],
+      room:[],
+      orderDate:[],
       line:true,
       bindex:[],
       cindex:[],
@@ -49,6 +54,13 @@ export default {
   },
   mounted(){
     this.getData();
+    this.getDatetime();
+  },
+  watch:{
+    //this.showOrderList()
+    newday:function(){
+      this.showData();
+    }
   },
   methods:{
     //时间下拉框的预设值
@@ -61,8 +73,8 @@ export default {
       if(date.getDate()<10){
         day = '0' + day ;
       }
-      var newday =  date.getFullYear() +'-' + mouth + '-' + day;
-      return newday;
+      this.newday =  date.getFullYear() +'-' + mouth + '-' + day;
+      return this.newday;
     },
 
     //显示/隐藏弹窗
@@ -90,26 +102,20 @@ export default {
     },
     //ordershow
     showOrderList(){
-      const begin = [],
-            end = [],
-            order_begin = [],
-            order_end = [],
-            room = [];
       for(let i in this.orderList)
       {
         //alert("dd");
         this.orderTime.push(this.orderList[i].ordertime);
-        room.push(this.orderList[i].room);
+        this.orderDate.push(this.orderList[i].date);
+        this.room.push(this.orderList[i].room);
       }
       for(let i in this.times){
         //alert("dd");
-        begin.push(this.times[i].begin);
-        end.push(this.times[i].end)
+        this.begin.push(this.times[i].begin);
+        this.end.push(this.times[i].end)
       } 
-      for(let j in this.orderTime){
-        order_begin.push(this.orderTime[j].begin);
-        order_end.push(this.orderTime[j].endding);
-      }
+      this.showData();
+      /*
       for(let i in room){
         if(room[i] == '智联'){
           let bindex = begin.indexOf(order_begin[i]);
@@ -131,12 +137,50 @@ export default {
           }
         }
       }
+      */
     },
+    //新的方法分割线
 
-    checked(){
-      alert('hh');
+    showData(){
+        let order_begin = [],
+            order_end = [],
+            j = 0,
+            i = 0;
+        this.bindex=[];
+        this.cindex=[];
+        this.dindex=[];
+      for(j in this.orderTime){
+        order_begin.push(this.orderTime[j].begin);
+        order_end.push(this.orderTime[j].endding);
+
+        if(this.newday == this.orderDate[j]){
+          //console.log(this.newday);
+          //console.log(this.room[j]);
+          if(this.room[j] == '智联'){
+            let bindex = this.begin.indexOf(order_begin[j]);
+            let eindex = this.end.indexOf(order_end[j]);
+            console.log(j);
+            //console.log(order_begin[j]);
+            for(i=bindex;i<=eindex;i++){
+              this.bindex.push(i);
+            }
+          }else if(this.room[j] == '格物'){
+            let bindex = this.begin.indexOf(order_begin[j]);
+            let eindex = this.end.indexOf(order_end[j]);
+            for(i=bindex;i<=eindex;i++){
+              this.cindex.push(i);
+            }
+          }else{
+            let bindex = this.begin.indexOf(order_begin[j]);
+            let eindex = this.end.indexOf(order_end[j]);
+            for(i=bindex;i<=eindex;i++){
+              this.dindex.push(i);
+            }
+          }
+        }
+      //console.log(j)           
+      }
     }
-
   }
 };
 </script>

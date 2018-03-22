@@ -88,6 +88,7 @@ export default {
                     var text2 = document.createTextNode('密码错误');
                     pasWord.appendChild(node);
                     node.appendChild(text2);
+                    this.password = '';
                   }
               }else{
                     var text1 = document.createTextNode('用户名不存在');
