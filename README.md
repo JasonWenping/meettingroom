@@ -14,18 +14,14 @@ npm run dev
 # build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
+# login account for test
+username：admin  password:123456
+username: Jason  password:111111
 
-# run unit tests
-npm run unit
+# pages for login&register 
+localhost:8801/login.html
 
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
+ 
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 # meettingroom
